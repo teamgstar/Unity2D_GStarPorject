@@ -7,12 +7,16 @@ public class NewBehaviourScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        sadasdsa
+     
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+#if UNITY_EDITOR_WIN
+
+#elif UNITY_ANDROID
+
+#endif
     }
 }
