@@ -54,6 +54,8 @@ public class PlayerMovement : MonoBehaviour
                     m_vDir = m_vSlideEndPos - m_vSlideStartPos;
                     m_vDir.Normalize();
                     Rot = Mathf.Atan2(-m_vDir.y, -m_vDir.x) * 180 / Mathf.PI;
+
+                    m_Status = PlayerStatus.Idle;
                 }
                 else 
                 {
@@ -63,11 +65,11 @@ public class PlayerMovement : MonoBehaviour
                     m_vDir.Normalize();
                     Rot = Mathf.Atan2(-m_vDir.y, -m_vDir.x) * 180 / Mathf.PI;
 
-                    if (Input.GetKeyDown(KeyCode.Mouse0))
-                    {
-                        m_vSlideStartPos = Input.mousePosition;
-                        
-                    }
+                    //if (Input.GetKeyDown(KeyCode.Mouse0))
+                    //{
+                    //    m_vSlideStartPos = Input.mousePosition;
+                    //    
+                    //}
                 }
                 break;
 
