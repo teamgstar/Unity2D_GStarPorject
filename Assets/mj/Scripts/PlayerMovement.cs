@@ -5,23 +5,21 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float MoveSpeed;
-
-    private enum PlayerStatus : byte
+    [HideInInspector] public enum PlayerStatus : byte
     {
         PS_Idle,
         PS_Press,
         PS_Move
     }
+    [HideInInspector] public float m_Rot;
+    [HideInInspector] public PlayerStatus m_Status;
 
-    private PlayerStatus m_Status;
 
-    private Vector2 m_Direction;
-    private Vector2 m_UpPos;
-    private Vector2 m_DownPos;
-
+    [HideInInspector] public Vector2 m_Direction;
+    [HideInInspector] public Vector2 m_UpPos;
+    [HideInInspector] public Vector2 m_DownPos;
     private Camera m_Camera;
 
-    private float m_Rot = 0;
     void Start()
     {
         m_Rot       = 0.0f;
@@ -34,28 +32,33 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        //m_DownPos = transform.position
         switch (m_Status)
         {
             case PlayerStatus.PS_Idle:
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
                     m_Status    = PlayerStatus.PS_Press;
-                    m_DownPos   = Input.mousePosition;
+                    m_DownPos = Input.mousePosition;
+                    m_DownPos = Camera.main.ScreenToWorldPoint(m_DownPos);
                 }
                 break;
             case PlayerStatus.PS_Press:
-                GameManager.g_GameSpeed = 0.5f;
+                GameManager.g_GameSpeed = 0.25f;
 
                 m_UpPos = Input.mousePosition;
-                m_Direction = m_UpPos - m_DownPos;
+                m_UpPos = Camera.main.ScreenToWorldPoint(m_UpPos);
+                m_Direction = m_UpPos - (Vector2)this.transform.position;
                 m_Direction.Normalize();
                 m_Rot = Mathf.Atan2(-m_Direction.y, -m_Direction.x) * 180 / Mathf.PI;
                 if (Input.GetKeyUp(KeyCode.Mouse0))
                 {
                     m_UpPos = Input.mousePosition;
-                    m_Direction = m_DownPos - m_UpPos;
+                    m_UpPos = Camera.main.ScreenToWorldPoint(m_UpPos);
+                    m_Direction = m_UpPos - (Vector2)this.transform.position;
                     m_Direction.Normalize();
                     m_Rot = Mathf.Atan2(-m_Direction.y, -m_Direction.x) * 180.0f / Mathf.PI;
+                    this.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                     this.GetComponent<Rigidbody2D>().AddForce(m_Direction * MoveSpeed, ForceMode2D.Impulse);
                     m_Status = PlayerStatus.PS_Move;
                 }
@@ -63,8 +66,10 @@ public class PlayerMovement : MonoBehaviour
             case PlayerStatus.PS_Move:
                 if(Input.GetKeyDown(KeyCode.Mouse0))
                 {
-                    m_Status = PlayerStatus.PS_Press;
-                    this.GetComponent<Rigidbody2D>().velocity *= 0.5f;
+                    m_DownPos = Input.mousePosition;
+                    m_DownPos = Camera.main.ScreenToWorldPoint(m_DownPos);
+                     m_Status = PlayerStatus.PS_Press;
+                    this.GetComponent<Rigidbody2D>().velocity *= GameManager.g_GameSpeed;           
                 }
                 break;
         }
