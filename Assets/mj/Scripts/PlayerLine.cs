@@ -31,7 +31,7 @@ public class PlayerLine : MonoBehaviour
         m_LineRenderer = ClickLine.GetComponent<LineRenderer>();       
         m_LineRenderer.startColor = Color.red;
         m_LineRenderer.endColor = Color.yellow;
-        m_LineRenderer.startWidth = 0.1f;
+        m_LineRenderer.startWidth = 0.25f;
         m_LineRenderer.endWidth = 0.0f;
         m_LineRenderer.enabled = false;
         m_Render = line.GetComponent<SpriteRenderer>();
@@ -57,19 +57,21 @@ public class PlayerLine : MonoBehaviour
                 this.transform.position = m_Player.transform.position;
                 m_LineRenderer.enabled = true;
                 m_Render.enabled = true;
+                m_DownPos = m_PlayerMovement.m_DownPos;
+                m_UpPos = m_PlayerMovement.m_UpPos;
+                m_LineRenderer.SetPosition(1, new Vector3(m_DownPos.x, m_DownPos.y, -1));
+                m_LineRenderer.SetPosition(0, new Vector3(m_UpPos.x, m_UpPos.y, -1));
                 break;
 
             
         }
 
-        m_DownPos = m_PlayerMovement.m_DownPos;
-        m_UpPos = m_PlayerMovement.m_UpPos;
-        m_LineRenderer.SetPosition(0, new Vector3(m_DownPos.x, m_DownPos.y, -1));
-        m_LineRenderer.SetPosition(1, new Vector3(m_UpPos.x, m_UpPos.y, -1));
 
         if (m_PlayerMovement.m_Status != PlayerMovement.PlayerStatus.PS_Press)
         {
             this.transform.localScale = Vector3.zero;
+            m_LineRenderer.SetPosition(1, Vector3.zero);
+            m_LineRenderer.SetPosition(0, Vector3.zero);
             m_LineRenderer.enabled = false;
             m_Render.enabled = false;
         }

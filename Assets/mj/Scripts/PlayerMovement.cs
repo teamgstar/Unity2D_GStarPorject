@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case PlayerStatus.PS_Press:
-                GameManager.g_GameSpeed = 0.1f;
+                GameManager.g_GameSpeed = 0.025f;
                 m_UpPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 m_Direction = m_UpPos - m_DownPos;
                 m_Direction.Normalize();
