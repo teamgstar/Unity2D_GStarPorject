@@ -4,102 +4,79 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    Camera Camera;
-    private Vector2 m_vDir = Vector2.zero;
-
     public float MoveSpeed;
-    public  enum PlayerStatus : int
-    {
-        Start,
-        Idle,
-        Slide_On,
-        Slide_Move
-    }
-    static public bool b_Move;
 
-    static public PlayerStatus m_Status;
-    static public Vector2 m_vSlideStartPos = Vector2.zero;
-    static public Vector2 m_vSlideEndPos = Vector2.zero;
-    
-    static public float Rot = 0;
-    // Start is called before the first frame update
+    private enum PlayerStatus : byte
+    {
+        PS_Idle,
+        PS_Press,
+        PS_Move
+    }
+
+    private PlayerStatus m_Status;
+
+    private Vector2 m_Direction;
+    private Vector2 m_UpPos;
+    private Vector2 m_DownPos;
+
+    private Camera m_Camera;
+
+    private float m_Rot = 0;
     void Start()
     {
-        m_Status = PlayerStatus.Start;
-        Camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        m_Rot       = 0.0f;
+        m_Direction = Vector2.zero;
+        m_UpPos     = Vector2.zero;
+        m_DownPos   = Vector2.zero;
+        m_Status    = PlayerStatus.PS_Idle;
+        m_Camera    = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
     }
-    //bool re;
-    // Update is called once per frame
+
     private void Update()
     {
         switch (m_Status)
         {
-            case PlayerStatus.Start:
-            case PlayerStatus.Idle:
+            case PlayerStatus.PS_Idle:
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
-                    m_Status = PlayerStatus.Slide_On;
-                    m_vSlideStartPos = Input.mousePosition;
-                    b_Move = false;
+                    m_Status    = PlayerStatus.PS_Press;
+                    m_DownPos   = Input.mousePosition;
                 }
-
                 break;
-            case PlayerStatus.Slide_On:
+            case PlayerStatus.PS_Press:
+                GameManager.g_GameSpeed = 0.5f;
 
+                m_UpPos = Input.mousePosition;
+                m_Direction = m_UpPos - m_DownPos;
+                m_Direction.Normalize();
+                m_Rot = Mathf.Atan2(-m_Direction.y, -m_Direction.x) * 180 / Mathf.PI;
                 if (Input.GetKeyUp(KeyCode.Mouse0))
                 {
-                    b_Move = true;
-                    //m_Status = PlayerStatus.Slide_Move;
-                    m_vSlideEndPos = Input.mousePosition;
-                    m_vDir = m_vSlideEndPos - m_vSlideStartPos;
-                    m_vDir.Normalize();
-                    Rot = Mathf.Atan2(-m_vDir.y, -m_vDir.x) * 180 / Mathf.PI;
-
-                    m_Status = PlayerStatus.Idle;
-                }
-                else 
-                {
-                    m_vSlideEndPos = Input.mousePosition;
-                    m_vDir = m_vSlideEndPos - m_vSlideStartPos;
-                    
-                    m_vDir.Normalize();
-                    Rot = Mathf.Atan2(-m_vDir.y, -m_vDir.x) * 180 / Mathf.PI;
-
-                    //if (Input.GetKeyDown(KeyCode.Mouse0))
-                    //{
-                    //    m_vSlideStartPos = Input.mousePosition;
-                    //    
-                    //}
+                    m_UpPos = Input.mousePosition;
+                    m_Direction = m_DownPos - m_UpPos;
+                    m_Direction.Normalize();
+                    m_Rot = Mathf.Atan2(-m_Direction.y, -m_Direction.x) * 180.0f / Mathf.PI;
+                    this.GetComponent<Rigidbody2D>().AddForce(m_Direction * MoveSpeed, ForceMode2D.Impulse);
+                    m_Status = PlayerStatus.PS_Move;
                 }
                 break;
-
+            case PlayerStatus.PS_Move:
+                if(Input.GetKeyDown(KeyCode.Mouse0))
+                {
+                    m_Status = PlayerStatus.PS_Press;
+                    this.GetComponent<Rigidbody2D>().velocity *= 0.5f;
+                }
+                break;
         }
     }
 
-    void FixedUpdate()
-    {
-        if (b_Move)
-        {
-            this.transform.Translate((m_vDir) * Time.deltaTime * MoveSpeed);
-            m_Status = PlayerStatus.Idle;
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Wall")
-        {
-            b_Move = false;
-            m_Status = PlayerStatus.Idle;
-        }
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Wall")
+        if (collision.gameObject.tag == "Wall")
         {
-            b_Move = false;
-            m_Status = PlayerStatus.Idle;
+            this.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
+            m_Status = PlayerStatus.PS_Idle;
         }
     }
 }
