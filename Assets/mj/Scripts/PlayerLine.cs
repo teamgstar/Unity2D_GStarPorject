@@ -32,7 +32,7 @@ public class PlayerLine : MonoBehaviour
         m_LineRenderer.startColor = Color.red;
         m_LineRenderer.endColor = Color.yellow;
         m_LineRenderer.startWidth = 0.1f;
-        m_LineRenderer.endWidth = 0.1f;
+        m_LineRenderer.endWidth = 0.0f;
         m_LineRenderer.enabled = false;
         m_Render = line.GetComponent<SpriteRenderer>();
         m_Player = GameObject.FindWithTag("Player");
@@ -64,8 +64,8 @@ public class PlayerLine : MonoBehaviour
 
         m_DownPos = m_PlayerMovement.m_DownPos;
         m_UpPos = m_PlayerMovement.m_UpPos;
-        m_LineRenderer.SetPosition(0, m_DownPos);
-        m_LineRenderer.SetPosition(1, m_UpPos);
+        m_LineRenderer.SetPosition(0, new Vector3(m_DownPos.x, m_DownPos.y, -1));
+        m_LineRenderer.SetPosition(1, new Vector3(m_UpPos.x, m_UpPos.y, -1));
 
         if (m_PlayerMovement.m_Status != PlayerMovement.PlayerStatus.PS_Press)
         {
