@@ -19,6 +19,8 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public Vector2 m_EndPos;
 
     private Camera m_Camera;
+    private Animator m_Anime;
+    private SpriteRenderer m_Renderer;
 
     private void Awake()
     {
@@ -28,11 +30,17 @@ public class PlayerMovement : MonoBehaviour
         m_EndPos    = Vector2.zero;
 
         m_Status    = PlayerStatus.PS_Idle;
+ 
     }
 
     void Start()
     {
         m_Camera    = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        m_Anime     = GetComponentInChildren<Animator>();
+        m_Renderer = GetComponent<SpriteRenderer>();
+
+        //애니메이션 상태 초기화
+        m_Anime.SetBool("b_Move", false);
     }
 
     private void Update()
@@ -67,6 +75,12 @@ public class PlayerMovement : MonoBehaviour
                 //버튼 터치 업
                 if (Input.GetKeyUp(KeyCode.Mouse0))
                 {
+                    //애니메이션 움직이는거로 변경
+                    m_Anime.SetBool("b_Move", true);
+
+                    //플레이어 회전 초기화
+                    this.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+
                     //게임 속도 다시 원상태로 돌려주고
                     GameManager.g_GameSpeed = 1.0f;
 
@@ -79,6 +93,16 @@ public class PlayerMovement : MonoBehaviour
 
                     //AddForce로 velocity값을 증가시키면 무게의 영향을 받게되므로 직접 대입
                     this.GetComponent<Rigidbody2D>().velocity = Power;
+
+                    //플레이어 좌우 반전
+                    if (this.GetComponent<Rigidbody2D>().velocity.x < 0)
+                    {
+                        m_Renderer.flipX = true;
+                    }
+                    else if (this.GetComponent<Rigidbody2D>().velocity.x > 0)
+                    {
+                        m_Renderer.flipX = false;
+                    }
 
                     //그다음 다시 땐상태로 enum값 되돌림
                     m_Status = PlayerStatus.PS_Idle;
@@ -98,6 +122,31 @@ public class PlayerMovement : MonoBehaviour
             
             //플레이어 상태도 뗀 상태로 돌아감
             m_Status = PlayerStatus.PS_Idle;
+            //애니메이션 가만히 있는거로 변경
+            m_Anime.SetBool("b_Move", false);
+
+            //충돌체와 위치 비교해 충돌면 구하고 회전
+            if (collision.gameObject.transform.position.y - collision.gameObject.GetComponent<SpriteRenderer>().size.y / 2 > this.transform.position.y)
+            {
+                this.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -180));
+            }
+
+            else if (collision.gameObject.transform.position.y + collision.gameObject.GetComponent<SpriteRenderer>().size.y / 2 < this.transform.position.y)
+            {
+                this.transform.rotation = Quaternion.Euler( new Vector3(0, 0, 0));
+            }
+
+            else if (collision.gameObject.transform.position.x - collision.gameObject.GetComponent<SpriteRenderer>().size.x / 2 > this.transform.position.x)
+            {
+                this.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
+            }
+
+            else if (collision.gameObject.transform.position.x + collision.gameObject.GetComponent<SpriteRenderer>().size.x / 2 < this.transform.position.x)
+            {
+                this.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -90));
+            }
+            else
+                this.transform.Rotate(Vector3.zero);
         }
     }
 }
