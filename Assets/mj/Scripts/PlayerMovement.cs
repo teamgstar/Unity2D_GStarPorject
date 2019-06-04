@@ -125,28 +125,51 @@ public class PlayerMovement : MonoBehaviour
             //애니메이션 가만히 있는거로 변경
             m_Anime.SetBool("b_Move", false);
 
+
+
             //충돌체와 위치 비교해 충돌면 구하고 회전
-            if (collision.gameObject.transform.position.y - collision.gameObject.GetComponent<SpriteRenderer>().size.y / 2 > this.transform.position.y)
+            if (collision.gameObject.transform.position.y - collision.gameObject.GetComponent<SpriteRenderer>().size.y / 2 >
+                this.transform.position.y)
             {
                 this.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -180));
             }
 
-            else if (collision.gameObject.transform.position.y + collision.gameObject.GetComponent<SpriteRenderer>().size.y / 2 < this.transform.position.y)
+            if (collision.gameObject.transform.position.y + collision.gameObject.GetComponent<SpriteRenderer>().size.y / 2 <
+                this.transform.position.y)
             {
                 this.transform.rotation = Quaternion.Euler( new Vector3(0, 0, 0));
             }
 
-            else if (collision.gameObject.transform.position.x - collision.gameObject.GetComponent<SpriteRenderer>().size.x / 2 > this.transform.position.x)
+            if (collision.gameObject.transform.position.x - collision.gameObject.GetComponent<SpriteRenderer>().size.x / 2 >
+               this.transform.position.x )
             {
                 this.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
             }
 
-            else if (collision.gameObject.transform.position.x + collision.gameObject.GetComponent<SpriteRenderer>().size.x / 2 < this.transform.position.x)
+            if (collision.gameObject.transform.position.x + collision.gameObject.GetComponent<SpriteRenderer>().size.x / 2 <
+                this.transform.position.x)
             {
                 this.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -90));
             }
-            else
-                this.transform.Rotate(Vector3.zero);
+            //else
+            //    this.transform.Rotate(Vector3.zero);
         }
+    }
+
+    void LeftCollision()
+    {
+
+    }
+    void RightCollision()
+    {
+
+    }
+    void TopCollision()
+    {
+
+    }
+    void BotomCollision()
+    {
+
     }
 }
