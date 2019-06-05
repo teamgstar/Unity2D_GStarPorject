@@ -72,6 +72,27 @@ public class PlayerMovement : MonoBehaviour
                 m_Direction = m_EndPos - m_StartPos;
                 m_Direction.Normalize();
 
+                float Rot = Mathf.Atan2(-m_Direction.y, -m_Direction.x) * 180 / Mathf.PI;
+
+                Debug.Log(Rot);
+
+                if (m_Renderer.flipX)
+                {
+                    if (Mathf.Abs(Rot) < 90)
+                    {
+                        m_Renderer.flipX = false;
+                        Debug.Log("AAAA");
+                    }
+                }
+                else
+                {
+                    if (Rot > 180)
+                    {
+                        m_Renderer.flipX = true;
+                        Debug.Log("BBB");
+                    }
+                }
+
                 //버튼 터치 업
                 if (Input.GetKeyUp(KeyCode.Mouse0))
                 {
