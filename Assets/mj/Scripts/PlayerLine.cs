@@ -66,8 +66,6 @@ public class PlayerLine : MonoBehaviour
         }
         else
         {
-          
-
             //이어진 선을 모두 풀어주고
             m_LineRenderer.SetPosition(1, Vector3.zero);
             m_LineRenderer.SetPosition(0, Vector3.zero);
