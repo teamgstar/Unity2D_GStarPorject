@@ -22,7 +22,6 @@ public class PlayerParent : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
         //충돌체 태그가 벽이면
         if (collision.gameObject.tag == "Wall")
         {
@@ -70,4 +69,25 @@ public class PlayerParent : MonoBehaviour
 
         }
     }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+
+        if (m_PlayerMovement.m_Rigid.velocity == Vector2.zero)
+        {
+            if (collision.gameObject.tag == "Wall")
+            {
+                if (m_PlayerMovement.m_CollDir == PlayerMovement.CollDir.CD_Left)
+                    m_Player.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -90));
+                if (m_PlayerMovement.m_CollDir == PlayerMovement.CollDir.CD_Right)
+                    m_Player.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
+                if (m_PlayerMovement.m_CollDir == PlayerMovement.CollDir.CD_Top)
+                    m_Player.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -180));
+                if (m_PlayerMovement.m_CollDir == PlayerMovement.CollDir.CD_Bottom)
+                    m_Player.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            }
+        }
+
+    }
+
 }
