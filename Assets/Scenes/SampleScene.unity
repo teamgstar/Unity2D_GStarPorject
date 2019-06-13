@@ -719,6 +719,7 @@ Transform:
 <<<<<<< HEAD
   m_RootOrder: 3
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1582425332
@@ -803,6 +804,8 @@ Transform:
 =======
   m_RootOrder: 4
 >>>>>>> 55abc6c50058fc958950e354403cc51613fc2265
+=======
+>>>>>>> parent of 34f95ca... no message
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1636931369
 GameObject:
@@ -932,8 +935,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e07fbecd252c354abcdeb750d340c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
   MoveSpeed: 10
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
   MoveSpeed: 30
@@ -946,6 +949,8 @@ MonoBehaviour:
 >>>>>>> 매우스충돌
 >>>>>>> a0c72dbf32db825a383543cd8e1bf7cd51f650c8
 >>>>>>> 55abc6c50058fc958950e354403cc51613fc2265
+=======
+>>>>>>> parent of 34f95ca... no message
   m_Status: 0
   m_Direction: {x: 0, y: 0}
   m_StartPos: {x: 0, y: 0}
