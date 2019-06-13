@@ -717,6 +717,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_RootOrder: 3
 =======
 <<<<<<< HEAD
@@ -725,6 +726,16 @@ Transform:
 <<<<<<< HEAD
 =======
 >>>>>>> parent of a90bcc0... 아니 이거 웨이래
+=======
+<<<<<<< HEAD
+  m_RootOrder: 3
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+  m_RootOrder: 3
+>>>>>>> parent of a0c72db... 매우스
+>>>>>>> a90bcc005474c203e6da0638974b9262c6d13f04
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1582425332
 GameObject:
@@ -804,6 +815,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
+>>>>>>> parent of a0c72db... 매우스
+=======
+  m_RootOrder: 4
+>>>>>>> 55abc6c50058fc958950e354403cc51613fc2265
+=======
+>>>>>>> parent of 34f95ca... no message
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1636931369
 GameObject:
@@ -934,11 +951,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
 <<<<<<< HEAD
+<<<<<<< HEAD
   MoveSpeed: 30
 =======
+=======
+>>>>>>> a90bcc005474c203e6da0638974b9262c6d13f04
   MoveSpeed: 10
 <<<<<<< HEAD
 =======
+<<<<<<< HEAD
 <<<<<<< HEAD
   MoveSpeed: 30
 >>>>>>> parent of a0c72db... 매우스
@@ -953,12 +974,28 @@ MonoBehaviour:
 =======
 >>>>>>> parent of 34f95ca... no message
 >>>>>>> parent of a90bcc0... 아니 이거 웨이래
+=======
+  MoveSpeed: 30
+>>>>>>> parent of a0c72db... 매우스
+=======
+<<<<<<< HEAD
+  MoveSpeed: 30
+=======
+  MoveSpeed: 20
+>>>>>>> 매우스충돌
+>>>>>>> a0c72dbf32db825a383543cd8e1bf7cd51f650c8
+>>>>>>> 55abc6c50058fc958950e354403cc51613fc2265
+=======
+>>>>>>> parent of 34f95ca... no message
+=======
+  MoveSpeed: 30
+>>>>>>> parent of a0c72db... 매우스
+>>>>>>> a90bcc005474c203e6da0638974b9262c6d13f04
   m_Status: 0
   m_Direction: {x: 0, y: 0}
   m_StartPos: {x: 0, y: 0}
   m_EndPos: {x: 0, y: 0}
   m_Anime: {fileID: 0}
-  m_Rigid: {fileID: 0}
   m_CollDir: 0
 --- !u!95 &2044650791
 Animator:
