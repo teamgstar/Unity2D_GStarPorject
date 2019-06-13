@@ -6,6 +6,8 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("초당 해당 이동속도의 100 배수 만큼 이동합니다.")]
     public float MoveSpeed;
 
+
+
     [HideInInspector] public enum PlayerStatus : byte
     {
         PS_Idle, //아무것도 안누르고 있을 때
@@ -30,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     [HideInInspector] public CollDir m_CollDir;
-
+    
     private Camera m_Camera;
     private SpriteRenderer m_Renderer;
 
